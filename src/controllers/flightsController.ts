@@ -31,6 +31,10 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
         requestQuery = urlQueryBuilder(requestQuery,
             "airline=,".concat(req.query.airline as string));
     }
+    if("airlineCode" in req.query) {
+        requestQuery = urlQueryBuilder(requestQuery,
+            "airlineCode=,".concat(req.query.airlineCode as string));
+    }
     if("route" in req.query) {
         requestQuery = urlQueryBuilder(requestQuery,
             "route=,".concat(req.query.route as string));
@@ -78,7 +82,7 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
         let flights: [Flight] = result.data.flights;
     
         return res.status(200).json({
-            message: flights.map(function (x) { return [x.scheduleDate, x.flightNumber]; }),
+            message: flights.map(function (x) { return [x.scheduleDate, x.flightNumber, x.flightName, x.airlineCode]; }),
             meta: {
                 count: flights.length
             }

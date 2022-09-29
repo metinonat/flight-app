@@ -15,6 +15,8 @@ export interface Flight {
     pier: string;
     id: string;
     mainFlight: string;
+    prefixIATA: string;
+    prefixICAO: string;
     airlineCode: number;
     publicFlightState: PublicFlightStateType;
     route: RouteType;
