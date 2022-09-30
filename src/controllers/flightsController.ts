@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import axios, { AxiosResponse } from 'axios';
 import { Flight } from "../utils/interfaces/flightInterface";
 import schipholApp from "../configs/schiphol.config";
-import { urlQueryBuilder } from "../utils/helpers";
+import { urlQueryBuilder, extractLinks, Dict } from "../utils/helpers";
 
 const getFlights = async (req: Request, res: Response, next: NextFunction) => {
     var requestQuery : string = "";
@@ -78,23 +78,31 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
                 Accept: "application/json"
             }
         });
-
         let flights: [Flight] = result.data.flights;
+        
+        let meta : object = {
+            count : flights.length
+        };
+        if(result.headers.link) {
+            meta = {...meta,...extractLinks(result.headers.link)}
+        } 
     
         return res.status(200).json({
-            message: flights.map(function (x) { return [x.scheduleDate, x.flightNumber, x.flightName, x.airlineCode]; }),
-            meta: {
-                count: flights.length
-            }
+            data: flights,
+            meta: meta
         });
     }
     catch (e) {
         if(e instanceof Error) {
             return res.status(400).json({
-                message: e.message
+                data: e.message
             });
         }
     }
 };
+
+const getFlight = async(req: Request, res: Response, next: NextFunction) => {
+    // TODO: get flight by id
+}
 
 export default { getFlights };

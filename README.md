@@ -4,12 +4,12 @@
 
 
 
-## API
+# API
 
-### `GET /flights`  
+## `GET /flights`  
 Returns a list of flights
 
-#### Available URL Parameters:
+### Available URL Parameters:
 
 example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22:00`
 
@@ -49,3 +49,81 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
  -  `fromScheduleDate` : query by schedule date range. Only 3 days period is allowed. Date is inclusive.
  -  `toScheduleDate` : query by schedule date range. Only 3 days period is allowed. Date is inclusive.
  -  `page` : page number for the result.
+
+### Response
+
+``` 
+   { 
+      "meta": {
+         "count": 20,
+         first: 'https://api.schiphol.nl:443/public-flights/flights',
+         prev: 'https://api.schiphol.nl:443/public-flights/flights?page=1',
+         next: 'https://api.schiphol.nl:443/public-flights/flights?page=3',
+         last: 'https://api.schiphol.nl:443/public-flights/flights?page=220'
+      },
+      "data": {
+         {
+            "lastUpdatedAt": "2022-09-30T08:28:00.223+02:00",
+            "actualLandingTime": "2022-09-30T06:12:12.000+02:00",
+            "actualOffBlockTime": null,
+            "aircraftRegistration": null,
+            "aircraftType": {
+                "iataMain": "330",
+                "iataSub": "332"
+            },
+            "baggageClaim": {
+                "belts": [
+                    "11"
+                ]
+            },
+            "checkinAllocations": null,
+            "codeshares": {
+                "codeshares": [
+                    "AF5479",
+                    "DL9507"
+                ]
+            },
+            "estimatedLandingTime": "2022-09-30T06:12:12.000+02:00",
+            "expectedTimeBoarding": null,
+            "expectedTimeGateClosing": null,
+            "expectedTimeGateOpen": null,
+            "expectedTimeOnBelt": "2022-09-30T07:05:27.254+02:00",
+            "expectedSecurityFilter": null,
+            "flightDirection": "A",
+            "flightName": "DL9507",
+            "flightNumber": 9507,
+            "gate": null,
+            "pier": null,
+            "id": "135609807360450186",
+            "isOperationalFlight": true,
+            "mainFlight": "KL0588",
+            "prefixIATA": "DL",
+            "prefixICAO": "DAL",
+            "airlineCode": 58,
+            "publicEstimatedOffBlockTime": null,
+            "publicFlightState": {
+                "flightStates": [
+                    "ARR",
+                    "EXP"
+                ]
+            },
+            "route": {
+                "destinations": [
+                    "LOS"
+                ],
+                "eu": "N",
+                "visa": false
+            },
+            "scheduleDateTime": "2022-09-30T05:40:00.000+02:00",
+            "scheduleDate": "2022-09-30",
+            "scheduleTime": "05:40:00",
+            "serviceType": "J",
+            "terminal": 2,
+            "transferPositions": null,
+            "schemaVersion": "4"
+        },
+        ...other flights
+      }
+   
+   }
+```
