@@ -27,7 +27,7 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
     -  id, and
     -  estimatedLandingTime
     Multiple sorting fields are supported by a comma.
- -  `order` : ordering flights by their srt value. Custom ordering for multiple sort fields can be provided as "101101" where each 1 or 0 corresponds respective sort field.
+ -  `order` : ordering flights by their `sort` value. Custom ordering for multiple sort fields can be provided as "101101" where each 1 or 0 corresponds respective sort field.
  -  `scheduleDate` : filters flights by given date. Default is the day request is made. Format is "yyyy-MM-dd".
  -  `scheduleTime` : filters flights by given time. No default value. Format is "HH:mm".
  -  `flightName` : filters flights by their flight number prefixed by airline abbreviation.
@@ -146,5 +146,27 @@ example: `/airlines?sort=publicName&order=1&page=2`
   - iata, 
   - icao, and
   - nvls
+-  `order` : ordering airlines by their `sort` value. Custom ordering for multiple sort fields can be provided as "101101" where each 1 or 0 corresponds respective sort field.
+- `page` : page number for the result.
+
+
+## `GET /destinations/:iata`
+Returns data of the destination with provided IATA code.
+
+
+## `GET /destinations`
+Returns a list of destinations
+
+### Available URL Parameters:
+
+example: `/destinations?sort=publicName.dutch,country&order=11&page=2`
+
+- `sort` : supported sorting fields are:
+  - publicName.dutch, 
+  - publicName.english, 
+  - iata, 
+  - country, and
+  - city.
+-  `order` : ordering flights by their `sort` value. Custom ordering for multiple sort fields can be provided as "101101" where each 1 or 0 corresponds respective sort field.
 - `page` : page number for the result.
 
