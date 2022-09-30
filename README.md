@@ -6,6 +6,9 @@
 
 # API
 
+## `GET /flights/:id`
+Returns data of the flight with provided id.
+
 ## `GET /flights`  
 Returns a list of flights
 
@@ -127,3 +130,5 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
    
    }
 ```
+
+
