@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import axios, { AxiosResponse } from 'axios';
 import { Flight } from "../utils/interfaces/flightInterface";
-import schipholApp from "../configs/schiphol.config";
 import { urlQueryBuilder, extractLinks, Dict } from "../utils/helpers";
+import { AxiosResponse } from 'axios';
+import { getCall } from '../utils/connection';
 
 const getFlights = async (req: Request, res: Response, next: NextFunction) => {
     var requestQuery : string = "";
@@ -69,15 +69,8 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
     }
     console.log("[INFO] Requested GET /flights".concat(requestQuery));
     try {
-
-        let result: AxiosResponse = await axios.get("https://api.schiphol.nl/public-flights/flights".concat(requestQuery),{
-            headers: {
-                app_id: schipholApp.app.id,
-                app_key: schipholApp.app.key,
-                ResourceVersion: schipholApp.app.version,
-                Accept: "application/json"
-            }
-        });
+        let result : AxiosResponse = await getCall("https://api.schiphol.nl/public-flights/flights".concat(requestQuery));
+            
         let flights: [Flight] = result.data.flights;
         
         let meta : object = {
@@ -102,7 +95,23 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getFlight = async(req: Request, res: Response, next: NextFunction) => {
-    // TODO: get flight by id
+    console.log("[INFO] Requested GET /flights/".concat(req.params.id));
+    console.log(req.params);
+    try {
+
+        let result: AxiosResponse = await getCall("https://api.schiphol.nl/public-flights/flights/".concat(req.params.id));
+        let flight: [Flight] = result.data;
+        return res.status(200).json({
+            data: flight
+        });
+    }
+    catch(e) {
+        if(e instanceof Error) {
+            return res.status(400).json({
+                data: e.message
+            });
+        }
+    }
 }
 
-export default { getFlights };
+export default { getFlights, getFlight };
