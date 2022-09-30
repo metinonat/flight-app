@@ -6,7 +6,12 @@ import flightRoutes from './routes/flights';
 import airlineRoutes from './routes/airlines';
 import destinationRoutes from './routes/destinations';
 
+// Dotenv
+require('dotenv').config()
+
+
 const router: Express = express();
+
 
 /** Logging */
 router.use(morgan('dev'));
