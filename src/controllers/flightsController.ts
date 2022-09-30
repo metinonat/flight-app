@@ -69,7 +69,7 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
     }
     console.log("[INFO] Requested GET /flights".concat(requestQuery));
     try {
-        let result : AxiosResponse = await getCall("https://api.schiphol.nl/public-flights/flights".concat(requestQuery));
+        let result : AxiosResponse = await getCall("/flights".concat(requestQuery));
             
         let flights: [Flight] = result.data.flights;
         
@@ -96,11 +96,10 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
 
 const getFlight = async(req: Request, res: Response, next: NextFunction) => {
     console.log("[INFO] Requested GET /flights/".concat(req.params.id));
-    console.log(req.params);
     try {
 
-        let result: AxiosResponse = await getCall("https://api.schiphol.nl/public-flights/flights/".concat(req.params.id));
-        let flight: [Flight] = result.data;
+        let result: AxiosResponse = await getCall("/flights/".concat(req.params.id));
+        let flight: Flight = result.data;
         return res.status(200).json({
             data: flight
         });
