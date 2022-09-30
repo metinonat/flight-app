@@ -2,7 +2,8 @@
 import http from 'http';
 import express, { Express } from 'express';
 import morgan from 'morgan';
-import routes from './routes/flights';
+import flightRoutes from './routes/flights';
+import airlineRoutes from './routes/airlines';
 
 const router: Express = express();
 
@@ -28,7 +29,8 @@ router.use((req, res, next) => {
 });
 
 /** Routes */
-router.use('/', routes);
+router.use('/', flightRoutes);
+router.use('/', airlineRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {
