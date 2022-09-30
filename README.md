@@ -131,6 +131,9 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
    }
 ```
 
+## `GET /airlines/:id`
+Returns data of the airline with provided id.
+
 ## `GET /airlines`
 Returns a list of airlines
 
@@ -144,5 +147,4 @@ example: `/airlines?sort=publicName&order=1&page=2`
   - icao, and
   - nvls
 - `page` : page number for the result.
-## `GET /airlines/:id`
-Returns data of the airline with provided id.
+
