@@ -24,7 +24,7 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
     -  mainflight,
     -  airlineCode,
     -  destination,
-    -  id and
+    -  id, and
     -  estimatedLandingTime
     Multiple sorting fields are supported by a comma.
  -  `order` : ordering flights by their srt value. Custom ordering for multiple sort fields can be provided as "101101" where each 1 or 0 corresponds respective sort field.
@@ -131,4 +131,18 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
    }
 ```
 
+## `GET /airlines`
+Returns a list of airlines
 
+### Available URL Parameters:
+
+example: `/airlines?sort=publicName&order=1&page=2`
+
+- `sort` : supported sorting fields are:
+  - publicName,
+  - iata, 
+  - icao, and
+  - nvls
+- `page` : page number for the result.
+## `GET /airlines/:id`
+Returns data of the airline with provided id.
