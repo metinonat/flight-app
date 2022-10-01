@@ -56,15 +56,20 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<R
      "password" in req.body) {
         var query = "SELECT * FROM users WHERE username = $1";
         // asign it to a user model
+        var user : User;
         // Fetch the user
         await pool.query(query, [req.body.username]).then((res) => {
-            console.log(res);
+            user = new User(res.rows[0].username,
+                            res.rows[0].password,
+                            res.rows[0].id,
+                            res.rows[0].created_at,
+                            res.rows[0].updated_at);
         }).catch((err) => {
             console.log(err);
         });
         // checkPass(req.body.password, )
         return res.status(200).json({
-            data: "Registered successfully."
+            data: "Logged in successfully."
         })
      }
     else {
@@ -78,4 +83,4 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<R
 }
 
 
-export default {register};
+export default {register, login};
