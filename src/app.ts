@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import flightRoutes from './routes/flights';
 import airlineRoutes from './routes/airlines';
 import destinationRoutes from './routes/destinations';
+import authRoutes from './routes/auth';
 
 // Dotenv
 require('dotenv').config()
@@ -38,6 +39,7 @@ router.use((req, res, next) => {
 router.use('/', flightRoutes);
 router.use('/', airlineRoutes);
 router.use('/', destinationRoutes);
+router.use('/', authRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {

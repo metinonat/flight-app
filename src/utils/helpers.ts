@@ -1,6 +1,10 @@
+import { createHash } from "crypto";
+
 export interface Dict {
     [key: string]: string
 }
+
+var algorithm : string = 'sha256WithRSAEncryption';
 
 export function urlQueryBuilder(baseQuery: string, newQuery: string, order?: string): string {
     var query : string = "";
@@ -71,6 +75,15 @@ export function extractLinks(link: string): Dict {
     }
 
     return links;
+}
+
+export function encrypt(pass: string) : string {
+    return createHash(algorithm).update(pass).digest('hex');
+}
+
+export function checkPass(pass: string, cryptedPass : string) : boolean {
+    if( cryptedPass == createHash(algorithm).update(pass).digest('hex') ) return true;
+    return false;
 }
 
 export default { urlQueryBuilder, extractLinks};
