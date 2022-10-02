@@ -74,9 +74,34 @@ export async function placeReservation(req: Request, res: Response, next: NextFu
 
 export async function getReservations(req: Request, res: Response, next: NextFunction)  {
     console.log("[INFO] Requested GET /user/reservations");
-    // TODO: filtering and sorting
-
-    var reservations : Reservation[] = await fetchAll("reservations", "user_id", req.user.id as number) as Reservation[]; 
+    var reservations : Reservation[] = [];
+    if(!req.query) {
+        reservations = await fetchAll("reservations", "user_id", req.user.id as number) as Reservation[]; 
+    }
+    else {
+        var query : string = "SELECT * FROM reservations WHERE user_id = $1";
+        var params : Array<string | number> = [req.user.id as number];
+        if("canceled" in req.query) {
+            if(req.query.canceled == "false") {
+                query = query.concat(" and canceled_at IS null"); 
+            }
+            else if(req.query.canceled == "only") {
+                query = query.concat(" and canceled_at IS NOT null");
+            }
+            else {
+                // Default behaviour
+            }
+        }
+        if("flight" in req.query) {
+            query = query.concat(" and flight_id = $2");
+            params.push(req.query.flight as string);
+        }
+        await pool.query(query, params).then((res) => {
+            reservations = res.rows;
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     return res.status(200).json({
         data: reservations
     });
