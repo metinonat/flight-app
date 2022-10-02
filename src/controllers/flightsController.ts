@@ -3,6 +3,7 @@ import { FlightInterface } from "../models/FlightInterface";
 import { urlQueryBuilder, extractLinks, Dict } from "../utils/helpers";
 import { AxiosResponse } from 'axios';
 import { getCall } from '../utils/connection';
+import { Flight } from '../models/Flight';
 
 const getFlights = async (req: Request, res: Response, next: NextFunction) => {
     var requestQuery : string = "";
@@ -113,4 +114,32 @@ const getFlight = async(req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export default { getFlights, getFlight };
+export async function availableSeats(req: Request, res: Response, next: NextFunction) : Promise<Response> {
+    var res_code : number = 400;
+    var res_message : object |string = "";
+    var flight : Flight;
+    console.log("[INFO] Requested GET /flights/".concat(req.params.id).concat("available-seats"));
+
+    await getCall("/flights/".concat(req.params.id)).then(async (res) => {
+        flight = new Flight(res.data.id);
+        if(flight) {
+            res_code = 200;
+            res_message = await flight.availableSeats(req.user.id as number);
+            console.log(res_message)
+        }
+        else {
+            res_code = 400;
+            res_message = "Flight not found.";
+        }
+    }).catch((err) => {
+        console.log(err);
+        res_code = 400;
+        res_message = err.message;
+    })
+
+    return res.status(res_code).json({
+        data : res_message
+    })
+}
+
+export default { getFlights, getFlight, availableSeats };

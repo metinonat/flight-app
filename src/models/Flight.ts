@@ -1,5 +1,6 @@
 import { pool } from "../services/db";
 import { AircraftTypeType, CheckinAllocationsType, FlightInterface, PublicFlightStateType, RouteType, TransferPositionsType } from "./FlightInterface";
+import { Reservation } from "./Reservation";
 
 export class Flight implements FlightInterface {
     lastUpdatedAt: string | undefined;
@@ -34,8 +35,24 @@ export class Flight implements FlightInterface {
         this.id = id;
     }
 
-    public availableSeats() {
-        // TODO
+    public async availableSeats(user_id : number) : Promise<object> {
+        var query : string = "SELECT user_id, row, seat FROM reservations WHERE flight_id = $1 and canceled_at IS null";
+        var reservations : Array<Reservation> = new Array<Reservation> ();
+        var userReservations : Array<object>;
+        var otherReservations : Array<object>;
+        await pool.query(query, [this.id]).then((res) => {
+            reservations = res.rows;
+        }).catch((err) => {
+            console.log(err);
+        })
+        userReservations = reservations.filter((record) => { return record.user_id == user_id; })
+                                        .map((record) => {return [record.row, record.seat]});
+        otherReservations = reservations.filter((record) => { return record.user_id != user_id; })
+                                        .map((record) => {return [record.row, record.seat]});
+        return {
+            taken : otherReservations,
+            yours : userReservations
+        }
     }
 
     public async reserve(user_id : number, rowNumber: number, seatLetter : string) : Promise<object> {

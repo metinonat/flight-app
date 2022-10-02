@@ -1,4 +1,4 @@
-import { Axios, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { Flight } from '../models/Flight';
 import { FlightInterface } from '../models/FlightInterface';
