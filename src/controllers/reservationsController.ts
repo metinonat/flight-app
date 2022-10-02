@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Flight } from '../models/Flight';
 import { FlightInterface } from '../models/FlightInterface';
 import { Reservation } from '../models/Reservation';
-import { doesExists, fetchAll, fetchOne } from '../services/db';
+import { doesExists, fetchAll, fetchOne, pool } from '../services/db';
 import { getCall } from '../utils/connection';
 
 
@@ -67,7 +67,8 @@ export async function placeReservation(req: Request, res: Response, next: NextFu
 
 export async function getReservations(req: Request, res: Response, next: NextFunction)  {
     console.log("[INFO] Requested GET /user/reservations");
-
+    // TODO: filtering and sorting
+    
     var reservations : Reservation[] = await fetchAll("reservations", "user_id", req.user.id as number) as Reservation[]; 
     return res.status(200).json({
         data: reservations
@@ -79,21 +80,47 @@ export async function getReservation(req: Request, res: Response, next: NextFunc
 
     if(await doesExists("reservations", "id", req.params.id)) {
         var rez : Reservation = await fetchOne("reservations", "id", req.params.id) as Reservation;
+        if(rez.user_id != req.user.id) {
+            return res.status(401)
+        }
         return res.status(200).json({
             data : rez
         })
     }
     else {
-        return res.status(400).json({
-            data : "No such reservation exist."
-        })
+        return res.status(401)
     }
 
 }
 
-export function cancelReservation(req: Request, res: Response, next: NextFunction) {
-    // TODO : check reservation
-    // TODO : soft delete reservation
+export async function cancelReservation(req: Request, res: Response, next: NextFunction) {
+    console.log("[INFO] Requested POST /user/reservations/".concat(req.params.id));
+
+    if(await doesExists("reservations", "id", req.params.id)) {
+        var rez : Reservation = await fetchOne("reservations", "id", req.params.id) as Reservation;
+        // Does the authenticated user is allowed to access reservation
+        if(rez.user_id != req.user.id) {
+            return res.status(401);
+        }
+        // Does the reservation is already canceled.
+        if(rez.canceled_at) {
+            return res.status(400).json( {
+                data: "Reservation is already canceled."
+            })
+        }
+        var query : string = "UPDATE reservations SET canceled_at = NOW() WHERE id = $1 RETURNING *";
+        await pool.query(query, [req.params.id]).then((res) => {
+            rez = res.rows[0];
+        }).catch((err) => {
+            console.log(err);
+        })
+        return res.status(200).json({
+            data : rez
+        })
+    }
+    else {
+        return res.status(401);
+    }
 }
 
 export default {placeReservation, getReservation, getReservations, cancelReservation};

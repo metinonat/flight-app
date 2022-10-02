@@ -7,6 +7,7 @@ router.use("/user/reservations", authentication);
 router.use("/user/reservations/:id", authentication);
 
 router.get('/user/reservations', controller.getReservations);
-router.use("/user/reservations/:id", controller.getReservation);
+router.get("/user/reservations/:id", controller.getReservation);
+router.post("/user/reservations/:id", controller.cancelReservation);
 
 export = router;
