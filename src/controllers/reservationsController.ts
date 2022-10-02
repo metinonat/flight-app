@@ -65,12 +65,30 @@ export async function placeReservation(req: Request, res: Response, next: NextFu
     });
 }
 
-export function getReservations(req: Request, res: Response, next: NextFunction)  {
-    // TODO : return all reservation by the user
+export async function getReservations(req: Request, res: Response, next: NextFunction)  {
+    console.log("[INFO] Requested GET /user/reservations");
+
+    var reservations : Reservation[] = await fetchAll("reservations", "user_id", req.user.id as number) as Reservation[]; 
+    return res.status(200).json({
+        data: reservations
+    });
 }
 
-export function getReservation(req: Request, res: Response, next: NextFunction)  {
-    // TODO : return reservation 
+export async function getReservation(req: Request, res: Response, next: NextFunction)  {
+    console.log("[INFO] Requested GET /user/reservations/".concat(req.params.id));
+
+    if(await doesExists("reservations", "id", req.params.id)) {
+        var rez : Reservation = await fetchOne("reservations", "id", req.params.id) as Reservation;
+        return res.status(200).json({
+            data : rez
+        })
+    }
+    else {
+        return res.status(400).json({
+            data : "No such reservation exist."
+        })
+    }
+
 }
 
 export function cancelReservation(req: Request, res: Response, next: NextFunction) {
@@ -78,4 +96,4 @@ export function cancelReservation(req: Request, res: Response, next: NextFunctio
     // TODO : soft delete reservation
 }
 
-export default {placeReservation};
+export default {placeReservation, getReservation, getReservations, cancelReservation};

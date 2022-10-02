@@ -6,6 +6,7 @@ import flightRoutes from './routes/flights';
 import airlineRoutes from './routes/airlines';
 import destinationRoutes from './routes/destinations';
 import authRoutes from './routes/auth';
+import userRoutes from './routes/user';
 
 // Dotenv
 require('dotenv').config()
@@ -40,6 +41,7 @@ router.use('/', flightRoutes);
 router.use('/', airlineRoutes);
 router.use('/', destinationRoutes);
 router.use('/', authRoutes);
+router.use('/', userRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {
