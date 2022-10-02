@@ -53,6 +53,19 @@ export async function migrate()  {
                             FOREIGN KEY (user_id)
                             REFERENCES users (id)
                     );`;
+    const createReservationsTable = `CREATE TABLE IF NOT EXISTS
+                    reservations(
+                        id SERIAL PRIMARY KEY,
+                        user_id INTEGER NOT NULL,
+                        flight_id INTEGER NOT NULLi
+                        row INTEGER NOT NULL,
+                        seat CHAR(1) NOT NULL,
+                        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+                        canceled_at TIMESTAMP,
+                        CONSTRAINT fk_user_id
+                            FOREIGN KEY (user_id)
+                            REFERENCES users (id)
+                    )`
 
     await pool.query(createUsersTable).then((res) => {
         console.log(res);
@@ -60,6 +73,11 @@ export async function migrate()  {
         console.log(err);
     });
     await pool.query(createAccessTokenTable).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+    await pool.query(createReservationsTable).then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
@@ -76,9 +94,6 @@ export async function migrate()  {
     }).catch((err) => {
         console.log(err);
     });
-
-    // TODO: Create Reservations Table
-    // TODO: Create Flight Reservations Table
     pool.end();
 }
 
@@ -90,6 +105,11 @@ export async function down() {
         console.log(err);
     });
     await pool.query("DROP TABLE IF EXISTS access_tokens CASCADE;").then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+    await pool.query("DROP TABLE IF EXISTS reservations CASCADE;").then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
@@ -106,8 +126,6 @@ export async function down() {
     }).catch((err) => {
         console.log(err);
     });
-    // TODO: Drop Reservations Table
-    // TODO: Drop Flight Reservations Table
     pool.end();
 }
 

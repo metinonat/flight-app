@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Flight } from "../utils/interfaces/flightInterface";
+import { FlightInterface } from "../models/FlightInterface";
 import { urlQueryBuilder, extractLinks, Dict } from "../utils/helpers";
 import { AxiosResponse } from 'axios';
 import { getCall } from '../utils/connection';
@@ -71,7 +71,7 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
     try {
         let result : AxiosResponse = await getCall("/flights".concat(requestQuery));
             
-        let flights: [Flight] = result.data.flights;
+        let flights: [FlightInterface] = result.data.flights;
         
         let meta : object = {
             count : flights.length
@@ -99,7 +99,7 @@ const getFlight = async(req: Request, res: Response, next: NextFunction) => {
     try {
 
         let result: AxiosResponse = await getCall("/flights/".concat(req.params.id));
-        let flight: Flight = result.data;
+        let flight: FlightInterface = result.data;
         return res.status(200).json({
             data: flight
         });

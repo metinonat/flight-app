@@ -7,11 +7,11 @@ export interface TokenInterface {
     created_at: Date;
 }
 
-export class Token {
-    private id: number;
-    private user_id: number;
-    private token: string;
-    private created_at: Date;
+export class Token implements TokenInterface {
+    id: number;
+    user_id: number;
+    token: string;
+    created_at: Date;
 
     public constructor(_id:number, _user_id: number, _token: string, _created_at : Date) {
         this.id = _id;
