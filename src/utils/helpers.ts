@@ -1,10 +1,13 @@
-import { createHash } from "crypto";
+import { randomBytes } from "crypto";
+import bcrypt from "bcrypt";
 
 export interface Dict {
     [key: string]: string
 }
 
-var algorithm : string = 'sha256WithRSAEncryption';
+// Constants
+const algorithm : string = 'sha256';
+const salt : string = 'flg30';
 
 export function urlQueryBuilder(baseQuery: string, newQuery: string, order?: string): string {
     var query : string = "";
@@ -77,13 +80,28 @@ export function extractLinks(link: string): Dict {
     return links;
 }
 
-export function encrypt(pass: string) : string {
-    return createHash(algorithm).update(pass).digest('hex');
+export async function encrypt(pass: string) : Promise<string> {
+    return bcrypt.hash(pass, 10);
 }
 
-export function checkPass(pass: string, cryptedPass : string) : boolean {
-    if( cryptedPass == createHash(algorithm).update(pass).digest('hex') ) return true;
-    return false;
+export async function checkPass(pass: string, cryptedPass : string) : Promise<boolean> {
+    try {
+        const result = await bcrypt.compare(pass, cryptedPass);
+        return result;
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
 }
 
-export default { urlQueryBuilder, extractLinks};
+export function generateToken() {
+    return randomBytes(64).toString('hex');
+}
+
+export function getDayDiff(startDate: Date, endDate: Date): number {
+    const msInDay = 24 * 60 * 60 * 1000;
+  
+    return Math.round(Math.abs(Number(endDate) - Number(startDate)) / msInDay);
+}
+
+export default { urlQueryBuilder, extractLinks, generateToken, getDayDiff};

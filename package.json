@@ -10,7 +10,8 @@
     "dev": "nodemon -r dotenv/config src/app.ts",
     "build": "rm -rf build/ && prettier --write src/ & tsc",
     "migrate": "node -r dotenv/config build/services/db.js migrate --kill",
-    "db-wipe": "node -r dotenv/config build/services/db.js down --kill"
+    "db-wipe": "node -r dotenv/config build/services/db.js down --kill",
+    "migrate:fresh": "npm run db-wipe && npm run migrate"
   },
   "keywords": [],
   "author": "Metin Onat Çukur",
@@ -20,6 +21,7 @@
     "@types/express": "^4.17.14",
     "@types/morgan": "^1.9.3",
     "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
@@ -31,6 +33,7 @@
     "typescript": "^4.8.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/pg": "^8.6.5"
   }
 }

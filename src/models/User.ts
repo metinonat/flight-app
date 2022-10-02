@@ -1,5 +1,5 @@
 import { pool } from "../services/db";
-import { encrypt } from "../utils/helpers";
+import { encrypt, generateToken } from "../utils/helpers";
 
 export class User {
     private id: number | undefined;
@@ -8,6 +8,7 @@ export class User {
     private created_at: string | undefined;
     private updated_at: string | undefined;
     private registered: boolean;
+    private accessToken: string | undefined;
 
     public constructor(_username: string, _password: string, _id?: number,  _created_at?: string, _updated_at?: string) {
         this.id = _id;
@@ -27,9 +28,28 @@ export class User {
         return this.id;
     }
 
-    public encryptPassword() : User {
-        this.password = encrypt(this.password);
+    public getPassword() : string {
+        return this.password;
+    }
+
+    public async encryptPassword() : Promise<User> {
+        this.password = await encrypt(this.password);
         return this;
+    }
+
+    public async generateAccessToken() : Promise<User> {
+        var query : string = "INSERT INTO access_tokens(user_id, token) VALUES($1, $2)";
+        this.accessToken = generateToken();
+        await pool.query(query, [this.id, this.accessToken]).then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        })
+        return this;
+    }
+
+    public getAccessToken() : string | undefined {
+        return this.accessToken;
     }
 
     public async save() : Promise<User> {
@@ -40,7 +60,6 @@ export class User {
             this.created_at = res.rows[0].created_at;
             this.updated_at = res.rows[0].updated_at;
             this.registered = true;
-            console.log(this.registered);
         }).catch((err) => {
             console.log(err);
         });

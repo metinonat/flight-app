@@ -23,7 +23,7 @@ pool.on('remove', () => {
     }
 })
 
-export function migrate()  {
+export async function migrate()  {
     const updated_timestamp_trigger : string = `CREATE OR REPLACE FUNCTION trigger_set_timestamp()
                                                 RETURNS TRIGGER AS $$
                                                 BEGIN
@@ -35,7 +35,6 @@ export function migrate()  {
                                             BEFORE UPDATE ON $1
                                             FOR EACH ROW
                                             EXECUTE PROCEDURE trigger_set_timestamp();`
-    // TODO: Create User Table
     const createUsersTable = `CREATE TABLE IF NOT EXISTS
                     users(
                         id SERIAL PRIMARY KEY,
@@ -44,51 +43,69 @@ export function migrate()  {
                         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
                         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
                     )`;
-    pool.query(createUsersTable).then((res) => {
+    const createAccessTokenTable = `CREATE TABLE IF NOT EXISTS
+                    access_tokens(
+                        id SERIAL PRIMARY KEY,
+                        user_id INTEGER NOT NULL,
+                        token VARCHAR(250) NOT NULL,
+                        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+                        CONSTRAINT fk_user_id
+                            FOREIGN KEY (user_id)
+                            REFERENCES users (id)
+                    );`;
+
+    await pool.query(createUsersTable).then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
-    })
+    });
+    await pool.query(createAccessTokenTable).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
     // Create trigger
-    pool.query(updated_timestamp_trigger).then((res) => {
+    await pool.query(updated_timestamp_trigger).then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
     });
     // Assign the trigger
-    pool.query(assing_trigger_query, ["users"]).then((res) => {
+    await pool.query(assing_trigger_query, ["users"]).then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
     });
 
-    // TODO: Create Personal Access Tokens Table
     // TODO: Create Reservations Table
     // TODO: Create Flight Reservations Table
     pool.end();
 }
 
-export function down() {
+export async function down() {
     // DROP Tables
-    pool.query("DROP TABLE IF EXISTS users CASCADE;").then((res) => {
+    await pool.query("DROP TABLE IF EXISTS users CASCADE;").then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+    await pool.query("DROP TABLE IF EXISTS access_tokens CASCADE;").then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
     });
     // DROP Triggers
-    pool.query("DROP TRIGGER IF EXISTS set_timestamp").then((res) => {
+    await pool.query("DROP TRIGGER IF EXISTS set_timestamp").then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
     });
     // DROP functions
-    pool.query("DROP FUNCTION IF EXISTS set_timestamp()").then((res) => {
+    await pool.query("DROP FUNCTION IF EXISTS set_timestamp()").then((res) => {
         console.log(res);
     }).catch((err) => {
         console.log(err);
     });
-    // TODO: Drop User Table
-    // TODO: Drop Personal Access Tokens Table
     // TODO: Drop Reservations Table
     // TODO: Drop Flight Reservations Table
     pool.end();
@@ -113,7 +130,18 @@ export async function doesExists(tableName: string, fieldName: string, value: st
     return exists;
 }
 
-export default { migrate, pool, down, doesExists }
+export async function fetchOne(tableName: string, fieldName: string, value: string | number) : Promise<object> {
+    var item : object = {};
+    const q = `SELECT * FROM ${tableName} WHERE ${fieldName} = $1;`;
+    await pool.query(q, [value]).then((res) => {
+        item = res.rows[0];
+    }).catch((err) => {
+        console.log(`[Error] db fetchOne: \n parameters: ${tableName}, ${fieldName}, ${value}\n ${err}`);
+    });
+    return item;
+}
+
+export default { migrate, pool, down, doesExists, fetchOne }
 
 
 
