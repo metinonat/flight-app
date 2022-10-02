@@ -7,6 +7,7 @@ import { doesExists, fetchOne } from "../services/db";
 export async function authentication(req: Request, res: Response, next: NextFunction) {
     if(req.headers.authorization) {
         var token_string = req.headers.authorization.split(" ")[1];
+        if(req.headers.authorization.split(" ")[0] != "Bearer") return res.status(401);
         if(await doesExists("access_tokens", "token", token_string)) {
             const obj : TokenInterface = await fetchOne("access_tokens", "token", token_string) as TokenInterface;
             const token_obj = new Token(obj.id, obj.user_id, obj.token, obj.created_at);

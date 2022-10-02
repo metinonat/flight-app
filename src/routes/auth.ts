@@ -3,6 +3,7 @@ import controller from '../controllers/authController';
 import { authentication } from '../middlewares/auth';
 const router = express.Router();
 
+// Authentication middleware
 router.use("/logout", authentication);
 
 router.post('/register', controller.register);

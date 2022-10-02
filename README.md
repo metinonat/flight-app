@@ -6,6 +6,17 @@
 
 # API
 
+## `POST /register`
+Register to the system by username and password. Body of the request must contain username, password, and confirm_password fields.
+
+## `POST /login`
+A registered user can login via registered username and password. An access token returns in the body of the response. This token will be used to access routes that require authentication. It needs to be pass as a Bearer Token.
+
+## `POST /logout`
+An user can logged out via this route. A valid access token must be provided.
+
+____________________________
+
 ## `GET /flights/:id`
 Returns data of the flight with provided id.
 
@@ -130,6 +141,7 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
    
    }
 ```
+_________________________
 
 ## `GET /airlines/:id`
 Returns data of the airline with provided id.
@@ -149,6 +161,7 @@ example: `/airlines?sort=publicName&order=1&page=2`
 -  `order` : ordering airlines by their `sort` value. Custom ordering for multiple sort fields can be provided as "101101" where each 1 or 0 corresponds respective sort field.
 - `page` : page number for the result.
 
+______________________________
 
 ## `GET /destinations/:iata`
 Returns data of the destination with provided IATA code.
