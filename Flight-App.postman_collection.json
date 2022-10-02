@@ -1,0 +1,1399 @@
+{
+	"info": {
+		"_postman_id": "d125a3f3-19f5-4a5c-a0ab-65ce2b5a5761",
+		"name": "Flight-App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Flights",
+			"item": [
+				{
+					"name": "Get one by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights/135609807360450186",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights",
+								"135609807360450186"
+							]
+						},
+						"description": "Get a flight data by its id."
+					},
+					"response": []
+				},
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							]
+						},
+						"description": "List all flights without any filter"
+					},
+					"response": []
+				},
+				{
+					"name": "sort and order 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?sort=scheduleTime&order=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "scheduleTime"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Sort flights according to schedule time and ascending order."
+					},
+					"response": []
+				},
+				{
+					"name": "sort and order 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?sort=estimatedLandingTime&order=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "estimatedLandingTime"
+								},
+								{
+									"key": "order",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Sort flights according to estimated landing time and descending order."
+					},
+					"response": []
+				},
+				{
+					"name": "sort and order 3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?sort=estimatedLandingTime,airlineCode&order=01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "estimatedLandingTime,airlineCode"
+								},
+								{
+									"key": "order",
+									"value": "01"
+								}
+							]
+						},
+						"description": "Sort flights according to descending estimated landing time and ascending airline code."
+					},
+					"response": []
+				},
+				{
+					"name": "sort and order 4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?sort=estimatedLandingTime,airlineCode,flightDirection,id&order=0101&page=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "estimatedLandingTime,airlineCode,flightDirection,id"
+								},
+								{
+									"key": "order",
+									"value": "0101"
+								},
+								{
+									"key": "page",
+									"value": "4"
+								}
+							]
+						},
+						"description": "Sort flights according to descending estimated landing time, ascending airline code, descending flight direction, and ascending id. Page is set to 4."
+					},
+					"response": []
+				},
+				{
+					"name": "flights on 10 October 2022",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?scheduleDate=2022-10-10&sort=scheduleTime&order=1&page=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "scheduleDate",
+									"value": "2022-10-10"
+								},
+								{
+									"key": "sort",
+									"value": "scheduleTime"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Filter flights on 2022-10-10. Sort them by ascending schedule time. Page is set to 2."
+					},
+					"response": []
+				},
+				{
+					"name": "flights on 5 July 2022",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?scheduleDate=2022-07-05&sort=scheduleTime&order=1&page=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "scheduleDate",
+									"value": "2022-07-05"
+								},
+								{
+									"key": "sort",
+									"value": "scheduleTime"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Filter flights on 2022-07-05. Sort them by descending schedule time."
+					},
+					"response": []
+				},
+				{
+					"name": "flights between 12-14 November 2022",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?fromScheduleDate=2022-10-12&toScheduleDate=2022-10-14&sort=scheduleDate,scheduleTime&order=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "fromScheduleDate",
+									"value": "2022-10-12"
+								},
+								{
+									"key": "toScheduleDate",
+									"value": "2022-10-14"
+								},
+								{
+									"key": "sort",
+									"value": "scheduleDate,scheduleTime"
+								},
+								{
+									"key": "order",
+									"value": "10"
+								}
+							]
+						},
+						"description": "flights between 12.10.2022 and 14.10.2022. Sort them by ascending schedule date and descending schedule time."
+					},
+					"response": []
+				},
+				{
+					"name": "flights at 14:00",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?scheduleTime=14:00&fromScheduleDate=2022-10-11&toScheduleDate=2022-10-12&sort=scheduleDate&order=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "scheduleTime",
+									"value": "14:00"
+								},
+								{
+									"key": "fromScheduleDate",
+									"value": "2022-10-11"
+								},
+								{
+									"key": "toScheduleDate",
+									"value": "2022-10-12"
+								},
+								{
+									"key": "sort",
+									"value": "scheduleDate"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								}
+							]
+						},
+						"description": "flights at 14:00 between 11.10.2022 and 12.10.2022. Sort them by ascending schedule date."
+					},
+					"response": []
+				},
+				{
+					"name": "flights by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?flightName=EJU7966&fromScheduleDate=2022-10-18&toScheduleDate=2022-10-20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "flightName",
+									"value": "EJU7966"
+								},
+								{
+									"key": "fromScheduleDate",
+									"value": "2022-10-18"
+								},
+								{
+									"key": "toScheduleDate",
+									"value": "2022-10-20"
+								}
+							]
+						},
+						"description": "flights named EJU7966 between 18 October and 20 October."
+					},
+					"response": []
+				},
+				{
+					"name": "Departure flights",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?flightName=EJU7966&fromScheduleDate=2022-10-18&toScheduleDate=2022-10-20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "flightName",
+									"value": "EJU7966"
+								},
+								{
+									"key": "fromScheduleDate",
+									"value": "2022-10-18"
+								},
+								{
+									"key": "toScheduleDate",
+									"value": "2022-10-20"
+								}
+							]
+						},
+						"description": "departure flights between 28 October and 29 October."
+					},
+					"response": []
+				},
+				{
+					"name": "flights by airline 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?airlineCode=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "airlineCode",
+									"value": "100"
+								}
+							]
+						},
+						"description": "flights with airline code 100."
+					},
+					"response": []
+				},
+				{
+					"name": "flights by airline 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?airline=EJU",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "airline",
+									"value": "EJU"
+								}
+							]
+						},
+						"description": "flights with airline EJU."
+					},
+					"response": []
+				},
+				{
+					"name": "flights by route",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?route=IST,ANK",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "route",
+									"value": "IST,ANK"
+								}
+							]
+						},
+						"description": "flights between İstanbul and Ankara."
+					},
+					"response": []
+				},
+				{
+					"name": "delayed flights",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?route=IST,ANK&includedelays=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "route",
+									"value": "IST,ANK"
+								},
+								{
+									"key": "includedelays",
+									"value": "true"
+								}
+							]
+						},
+						"description": "delayed flights between İstanbul and Ankara."
+					},
+					"response": []
+				},
+				{
+					"name": "flights between 15:00 and 17:00",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/flights?route=IST&flightDirection=A&fromDateTime=2022-10-29T12:00:00&toDateTime=2022-10-29T17:00:00&searchDateTimeField=scheduleDateTime",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "route",
+									"value": "IST"
+								},
+								{
+									"key": "flightDirection",
+									"value": "A"
+								},
+								{
+									"key": "fromDateTime",
+									"value": "2022-10-29T12:00:00"
+								},
+								{
+									"key": "toDateTime",
+									"value": "2022-10-29T17:00:00"
+								},
+								{
+									"key": "searchDateTimeField",
+									"value": "scheduleDateTime"
+								}
+							]
+						},
+						"description": "flights to Istanbul between 12:00 and 17:00 in 29.10.2022."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Airlines",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/airlines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"airlines"
+							]
+						},
+						"description": "List all airlines"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/airlines?page=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"airlines"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "5"
+								}
+							]
+						},
+						"description": "List all airlines"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all w/sort",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/airlines?sort=publicName&order=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"airlines"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "publicName"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								}
+							]
+						},
+						"description": "List all airlines according to ascending public names"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all w/sort 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/airlines?sort=iata,publicName&order=01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"airlines"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "iata,publicName"
+								},
+								{
+									"key": "order",
+									"value": "01"
+								}
+							]
+						},
+						"description": "List all airlines according to descending iata code and ascending public names"
+					},
+					"response": []
+				},
+				{
+					"name": "Get by IATA/ICAO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/airlines/X3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"airlines",
+								"X3"
+							]
+						},
+						"description": "get airline by IATA or ICAO codes."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Destinations",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/destinations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"destinations"
+							]
+						},
+						"description": "List all destinations"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/destinations?page=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"destinations"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3"
+								}
+							]
+						},
+						"description": "List all destinations"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all w/sort",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/destinations?sort=publicName.dutch&order=1&page=111",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"destinations"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "publicName.dutch"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "111"
+								}
+							]
+						},
+						"description": "List all destinations according to ascending ducth public names"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all w/sort 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/destinations?sort=country,publicName.english&order=01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"destinations"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "country,publicName.english"
+								},
+								{
+									"key": "order",
+									"value": "01"
+								}
+							]
+						},
+						"description": "List all destinations according to descending country and ascending english public names"
+					},
+					"response": []
+				},
+				{
+					"name": "Get by IATA",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:55644/destinations/JMD",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"destinations",
+								"JMD"
+							]
+						},
+						"description": "get destination by IATA code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"metinonat\",\r\n    \"password\": \"admin123\",\r\n    \"confirm_password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/register",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"metinonat\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/login",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "c1b5b99c75ad663d8f833aeeb5998cfe5fe4f31f15b7adb343a4bf439b9b72fedf97b69e15068c86147f10b9021d6d6ea73c4eb4509196530744cca2799f7982",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "Upcoming flights to ESB",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:55644/flights?fromScheduleDate=2022-10-22&toScheduleDate=2022-10-24&flightDirection=D&route=ESB",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights"
+							],
+							"query": [
+								{
+									"key": "fromScheduleDate",
+									"value": "2022-10-22"
+								},
+								{
+									"key": "toScheduleDate",
+									"value": "2022-10-24"
+								},
+								{
+									"key": "flightDirection",
+									"value": "D"
+								},
+								{
+									"key": "route",
+									"value": "ESB"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserved seats for a flight",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:55644/flights/135778405862547775/reserved-seats",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights",
+								"135778405862547775",
+								"reserved-seats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve a flight to ESB",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"row\" : 12,\r\n    \"seat\": \"C\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/flights/135778405862547775/reserve",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights",
+								"135778405862547775",
+								"reserve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve an unavailable seat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"row\" : 122,\r\n    \"seat\": \"C\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/flights/135778405862547775/reserve",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"flights",
+								"135778405862547775",
+								"reserve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all reservations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/user/reservations",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"user",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get canceled reservations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/user/reservations?canceled=only",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"user",
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "canceled",
+									"value": "only"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get active reservations only",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/user/reservations?canceled=false",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"user",
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "canceled",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get reservations for a specific flight",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/user/reservations?canceled=false&flight=135778405862547775",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"user",
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "canceled",
+									"value": "false"
+								},
+								{
+									"key": "flight",
+									"value": "135778405862547775"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "password",
+									"value": "{{Access Token}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/user/reservations/2",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"user",
+								"reservations",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel a reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "password",
+									"value": "{{Access Token}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:55644/user/reservations/2",
+							"host": [
+								"localhost"
+							],
+							"port": "55644",
+							"path": [
+								"user",
+								"reservations",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Access Token",
+			"value": "279222a992356081503daea51a431726dc399e8cad4c8343b6374331dea5baa8856a877fea47e6a3e30c4864d8b461e6d988501c74b10dca7618b1bb0f919bf9"
+		}
+	]
+}

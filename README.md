@@ -1,7 +1,9 @@
 # Flight App
 
 
-A flight app powered by the Schiphol Public Flight API. This app allows you to filter all upcoming and historical flights. App has a local simple reservation service.   
+A flight app powered by the Schiphol Public Flight API. This app allows you to filter all upcoming and historical flights. App has a local simple reservation service. 
+
+A postman collection can be found in root directory for testing.
 
 ## Requirements
 

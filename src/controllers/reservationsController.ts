@@ -30,6 +30,11 @@ export async function placeReservation(req: Request, res: Response, next: NextFu
                 `Seat letter must be in ${availableSeats}`
             ];
         }
+        // Flight is need to be Departure and upcoming
+        else if(obj.flightDirection != "D" || new Date(obj.scheduleDateTime as string) < new Date()) {
+            res_code = 400;
+            res_message = "Flight is not suitable to reserve a seat. Try an upcoming and departure flight."; 
+        }
         // Check seat availablity
         else{
             if(await doesExists("reservations", "flight_id", flight.id) ) {
