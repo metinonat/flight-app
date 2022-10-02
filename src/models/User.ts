@@ -2,11 +2,11 @@ import { pool } from "../services/db";
 import { encrypt, generateToken } from "../utils/helpers";
 
 export class User {
-    private id: number | undefined;
-    private username: string;
-    private password: string;
-    private created_at: string | undefined;
-    private updated_at: string | undefined;
+    id: number | undefined;
+    username: string;
+    password: string;
+    created_at: string | undefined;
+    updated_at: string | undefined;
     private registered: boolean;
     private accessToken: string | undefined;
 

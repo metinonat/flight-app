@@ -15,7 +15,7 @@ export async function authentication(req: Request, res: Response, next: NextFunc
             if(token_obj.expired()) return res.status(401).json({ data: "Token expired."});
             var auth_user : User = await fetchOne("users", "id", token_obj.getUserId()) as User;
             // Store user data in request to access through the app.
-            req.user = auth_user;
+            req.user = new User(auth_user.username, auth_user.password, auth_user.id, auth_user.created_at, auth_user.updated_at);
         }
         else {
             return res.status(401);

@@ -57,7 +57,7 @@ export async function migrate()  {
                     reservations(
                         id SERIAL PRIMARY KEY,
                         user_id INTEGER NOT NULL,
-                        flight_id INTEGER NOT NULLi
+                        flight_id VARCHAR(250) NOT NULL,
                         row INTEGER NOT NULL,
                         seat CHAR(1) NOT NULL,
                         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -157,6 +157,17 @@ export async function fetchOne(tableName: string, fieldName: string, value: stri
         console.log(`[Error] db fetchOne: \n parameters: ${tableName}, ${fieldName}, ${value}\n ${err}`);
     });
     return item;
+}
+
+export async function fetchAll(tableName: string, fieldName: string, value: string | number) : Promise<object[]> {
+    var items : object[] = [];
+    const q = `SELECT * FROM ${tableName} WHERE ${fieldName} = $1;`;
+    await pool.query(q, [value]).then((res) => {
+        items = res.rows;
+    }).catch((err) => {
+        console.log(`[Error] db fetchOne: \n parameters: ${tableName}, ${fieldName}, ${value}\n ${err}`);
+    });
+    return items;
 }
 
 export default { migrate, pool, down, doesExists, fetchOne }

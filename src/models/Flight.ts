@@ -1,3 +1,4 @@
+import { pool } from "../services/db";
 import { AircraftTypeType, CheckinAllocationsType, FlightInterface, PublicFlightStateType, RouteType, TransferPositionsType } from "./FlightInterface";
 
 export class Flight implements FlightInterface {
@@ -34,10 +35,18 @@ export class Flight implements FlightInterface {
     }
 
     public availableSeats() {
-        
+
     }
 
-    public reserve(rowNumber: number, seatLetter : string) {
-
+    public async reserve(user_id : number, rowNumber: number, seatLetter : string) : Promise<object> {
+        var query : string = "INSERT INTO reservations(user_id, flight_id, row, seat, canceled_at) VALUES($1, $2, $3, $4, $5) RETURNING *";
+        var obj : object = {};
+        await pool.query(query, [user_id, this.id, rowNumber, seatLetter, null]).then((res) => {
+            console.log(res);
+            obj =  res.rows[0];
+        }).catch((err) => {
+            console.log(err);
+        })
+        return obj;
     } 
 }

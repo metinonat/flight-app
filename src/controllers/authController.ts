@@ -99,11 +99,10 @@ export async function logout(req: Request, res: Response, next: NextFunction): P
 
     console.log(req.body);
 
-    if(req.headers.authorization) {
-        var token = req.headers.authorization.split(" ")[1];
-        if(await doesExists("access_tokens", "token", token)) {
+    if(req.user) {
+        if(await doesExists("access_tokens", "token", req.user.getAccessToken() as string)) {
             const query = `DELETE FROM access_tokens WHERE token = $1`;
-            await pool.query(query, [token]).then((res) => {}).catch((err) => {
+            await pool.query(query, [req.user.getAccessToken() as string]).then((res) => {}).catch((err) => {
                 console.log(err);
             })
             res_code = 200;
