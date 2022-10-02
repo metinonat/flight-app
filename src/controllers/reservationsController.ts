@@ -9,9 +9,9 @@ import { getCall } from '../utils/connection';
 
 export async function placeReservation(req: Request, res: Response, next: NextFunction) : Promise<Response> {
     var res_code : number;
-    var res_message : string | object;
+    var res_message : string | object | string[];
     var reserved : boolean = false;
-
+    const availableSeats = ['A', 'B', 'C', 'D', 'E', 'F'];
     console.log("[INFO] Requested GET /flights/".concat(req.params.id).concat('/reserve'));
     
     try { 
@@ -22,6 +22,13 @@ export async function placeReservation(req: Request, res: Response, next: NextFu
         if(!req.body.row && !req.body.seat) {
             res_code = 400;
             res_message = "Missing fields.";
+        }
+        else if(req.body.row < 1 || req.body.seat > 30 || !(req.body.seat in availableSeats)) {
+            res_code = 400;
+            res_message = [
+                "Row number must be between [1-30].",
+                `Seat letter must be in ${availableSeats}`
+            ];
         }
         // Check seat availablity
         else{
@@ -68,7 +75,7 @@ export async function placeReservation(req: Request, res: Response, next: NextFu
 export async function getReservations(req: Request, res: Response, next: NextFunction)  {
     console.log("[INFO] Requested GET /user/reservations");
     // TODO: filtering and sorting
-    
+
     var reservations : Reservation[] = await fetchAll("reservations", "user_id", req.user.id as number) as Reservation[]; 
     return res.status(200).json({
         data: reservations
