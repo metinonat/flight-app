@@ -35,7 +35,7 @@ export class Flight implements FlightInterface {
     }
 
     public availableSeats() {
-
+        // TODO
     }
 
     public async reserve(user_id : number, rowNumber: number, seatLetter : string) : Promise<object> {

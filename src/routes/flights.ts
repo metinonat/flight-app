@@ -8,6 +8,6 @@ router.use("/flights/:id/reserve", authentication);
 
 router.get('/flights', controller.getFlights);
 router.get('/flights/:id', controller.getFlight);
-router.get('/flights/:id/reserve', reservation.placeReservation);
+router.post('/flights/:id/reserve', reservation.placeReservation);
 
 export = router;
