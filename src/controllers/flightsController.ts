@@ -114,7 +114,7 @@ const getFlight = async(req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export async function availableSeats(req: Request, res: Response, next: NextFunction) : Promise<Response> {
+export async function reservedSeats(req: Request, res: Response, next: NextFunction) : Promise<Response> {
     var res_code : number = 400;
     var res_message : object |string = "";
     var flight : Flight;
@@ -124,7 +124,7 @@ export async function availableSeats(req: Request, res: Response, next: NextFunc
         flight = new Flight(res.data.id);
         if(flight) {
             res_code = 200;
-            res_message = await flight.availableSeats(req.user.id as number);
+            res_message = await flight.reservedSeats(req.user.id as number);
             console.log(res_message)
         }
         else {
@@ -142,4 +142,4 @@ export async function availableSeats(req: Request, res: Response, next: NextFunc
     })
 }
 
-export default { getFlights, getFlight, availableSeats };
+export default { getFlights, getFlight, reservedSeats };

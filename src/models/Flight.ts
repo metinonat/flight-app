@@ -35,7 +35,7 @@ export class Flight implements FlightInterface {
         this.id = id;
     }
 
-    public async availableSeats(user_id : number) : Promise<object> {
+    public async reservedSeats(user_id : number) : Promise<object> {
         var query : string = "SELECT user_id, row, seat FROM reservations WHERE flight_id = $1 and canceled_at IS null";
         var reservations : Array<Reservation> = new Array<Reservation> ();
         var userReservations : Array<object>;

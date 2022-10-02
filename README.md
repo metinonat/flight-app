@@ -1,7 +1,54 @@
+# Flight App
 
 
+A flight app powered by the Schiphol Public Flight API. This app allows you to filter all upcoming and historical flights. App has a local simple reservation service.   
 
+## Requirements
 
+- Node 14.15.0
+- Postgresql 13.1
+- Axios 0.27.2
+- Bcrypt 5.0.1
+- Crypto 1.0.1
+- Dotenv 16.0.3
+- Express 4.18.1
+- Make-runnable 1.3.10
+- Nodemon 2.0.20
+- pg 8.8.0
+- Ts-node 10.9.1
+- Typescript 4.8.3
+
+____________________
+## Getting Ready
+
+### Preparing the environment:
+a .env file must be available similar to .env.example
+
+Installing dependencies:
+
+`> npm install`
+
+Compiling the project: 
+
+`> npm run build`
+
+Prepare the database:
+
+`> npm run migrate`
+
+Run the server:
+
+`> npm run dev`
+
+### Other useful commands: 
+
+Drops all tables and cleans db:
+
+`> npm run db-wipe`
+
+Freshes the tables by first drop everything and then migrating again:
+
+`> npm run migrate:fresh`
 
 
 # API
@@ -15,6 +62,23 @@ A registered user can login via registered username and password. An access toke
 ## `POST /logout`
 An user can logged out via this route. A valid access token must be provided.
 
+_________________________
+
+## `GET /user/reservations`
+Returns reservations belongs to current user. Authentication is needed.
+
+### Available URL Parameters:
+
+example: `/user/reservations?canceled=false&flight_id=135778405862547775`
+
+- `canceled` : used to filter canceled reservations. Can be only | true | false. true is the default behaviour that will return every reservation. false will return only active reservations. And, only will return only canceled ones.
+- `flight` : used to filter reservations from a single flight. A valid flight id must be provided. 
+
+## `GET /user/reservations:id`
+Returns the specific reservation. Authentication is needed.
+
+## `POST /user/reservations:id`
+Cancels the reservation with given id. Authentication is needed. Only the user owns the reservation can cancel it. The reservation will not be deleted and can be seen among all reservations.
 ____________________________
 
 ## `GET /flights/:id`
@@ -141,6 +205,13 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
    
    }
 ```
+
+## `GET /flights/:id/reserved-seats`
+Returns reserved seats on the flight with id given. Authentication is needed. Response includes reservations belongs to current user.
+
+## `POST /flights/:id/reserve`
+Reserves the given flight with provided row and seat values. row field must be between 1 and 30, while seat value must be one of the A,B,C,D,E, and F letters. Authentication is needed.
+
 _________________________
 
 ## `GET /airlines/:id`
@@ -182,4 +253,3 @@ example: `/destinations?sort=publicName.dutch,country&order=11&page=2`
   - city.
 -  `order` : ordering flights by their `sort` value. Custom ordering for multiple sort fields can be provided as "101101" where each 1 or 0 corresponds respective sort field.
 - `page` : page number for the result.
-
