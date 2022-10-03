@@ -27,7 +27,7 @@ ____________________
 ## Getting Ready
 
 ### Preparing the environment:
-a .env file must be available similar to .env.example
+a .env file must be available similar to .env.example, in which Redis and PostgreSQL settings must be present.
 
 Installing dependencies:
 
