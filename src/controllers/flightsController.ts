@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { FlightInterface } from "../models/FlightInterface";
 import { urlQueryBuilder, extractLinks, Dict } from "../utils/helpers";
-import { AxiosResponse } from 'axios';
-import { getCall } from '../utils/connection';
+import { APIResponseInterface, getCall } from '../utils/connection';
 import { Flight } from '../models/Flight';
 
 const getFlights = async (req: Request, res: Response, next: NextFunction) => {
@@ -70,7 +69,7 @@ const getFlights = async (req: Request, res: Response, next: NextFunction) => {
     }
     console.log("[INFO] Requested GET /flights".concat(requestQuery));
     try {
-        let result : AxiosResponse = await getCall("/flights".concat(requestQuery));
+        let result : APIResponseInterface = await getCall("/flights".concat(requestQuery));
             
         let flights: [FlightInterface] = result.data.flights;
         
@@ -99,8 +98,8 @@ const getFlight = async(req: Request, res: Response, next: NextFunction) => {
     console.log("[INFO] Requested GET /flights/".concat(req.params.id));
     try {
 
-        let result: AxiosResponse = await getCall("/flights/".concat(req.params.id));
-        let flight: FlightInterface = result.data;
+        let result: APIResponseInterface = await getCall("/flights/".concat(req.params.id));
+        let flight: FlightInterface = result.data as FlightInterface;
         return res.status(200).json({
             data: flight
         });

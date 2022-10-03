@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import axios, { AxiosResponse } from 'axios';
 import { extractLinks, urlQueryBuilder } from '../utils/helpers';
-import { getCall } from '../utils/connection';
+import { APIResponseInterface, getCall } from '../utils/connection';
 import { Destination } from '../utils/interfaces/destinationInterface';
 
 const getDestinations = async(req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +15,7 @@ const getDestinations = async(req: Request, res: Response, next: NextFunction) =
     }
     console.log("[INFO] Requested GET /destinations".concat(requestQuery));
     try {
-        let result : AxiosResponse = await getCall("/destinations".concat(requestQuery));
+        let result : APIResponseInterface = await getCall("/destinations".concat(requestQuery));
         let destinations : [Destination] = result.data.destinations;
         
         let meta : object = {
@@ -43,7 +42,7 @@ const getDestinations = async(req: Request, res: Response, next: NextFunction) =
 const getDestination = async(req: Request, res: Response, next: NextFunction) => {
     console.log("[INFO] Requested GET /destinations/".concat(req.params.iata));
     try {
-        let result : AxiosResponse = await getCall("/destinations/".concat(req.params.iata));
+        let result : APIResponseInterface = await getCall("/destinations/".concat(req.params.iata));
         let destination: Destination = result.data;
         return res.status(200).json({
             data: destination

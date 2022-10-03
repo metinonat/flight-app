@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import axios, { AxiosResponse } from 'axios';
 import { Airline } from '../utils/interfaces/airlineInterface';
 import { extractLinks, urlQueryBuilder } from '../utils/helpers';
-import { getCall } from '../utils/connection';
+import { APIResponseInterface, getCall } from '../utils/connection';
 
 const getAirlines = async(req: Request, res: Response, next: NextFunction) => {
     var requestQuery : string  = "";
@@ -16,7 +15,7 @@ const getAirlines = async(req: Request, res: Response, next: NextFunction) => {
     }
     console.log("[INFO] Requested GET /airlines".concat(requestQuery));
     try {
-        let result : AxiosResponse = await getCall("/airlines".concat(requestQuery));
+        let result : APIResponseInterface = await getCall("/airlines".concat(requestQuery));
         let airlines : [Airline] = result.data.airlines;
         
         let meta : object = {
@@ -44,7 +43,7 @@ const getAirlines = async(req: Request, res: Response, next: NextFunction) => {
 const getAirline = async(req: Request, res: Response, next: NextFunction) => {
     console.log("[INFO] Requested GET /airlines/".concat(req.params.id));
     try {
-        let result : AxiosResponse = await getCall("/airlines/".concat(req.params.id));
+        let result : APIResponseInterface = await getCall("/airlines/".concat(req.params.id));
         let airline: Airline = result.data;
         return res.status(200).json({
             data: airline

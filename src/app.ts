@@ -9,7 +9,7 @@ import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 
 // Dotenv
-require('dotenv').config()
+require('dotenv').config();
 
 
 const router: Express = express();
@@ -50,6 +50,7 @@ router.use((req, res, next) => {
         message: error.message
     });
 });
+
 
 /** Server */
 const httpServer = http.createServer(router);

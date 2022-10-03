@@ -1,10 +1,9 @@
-import { AxiosResponse } from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { Flight } from '../models/Flight';
 import { FlightInterface } from '../models/FlightInterface';
 import { Reservation } from '../models/Reservation';
 import { doesExists, fetchAll, fetchOne, pool } from '../services/db';
-import { getCall } from '../utils/connection';
+import { APIResponseInterface, getCall } from '../utils/connection';
 
 
 export async function placeReservation(req: Request, res: Response, next: NextFunction) : Promise<Response> {
@@ -15,7 +14,7 @@ export async function placeReservation(req: Request, res: Response, next: NextFu
     console.log("[INFO] Requested GET /flights/".concat(req.params.id).concat('/reserve'));
     
     try { 
-        var result : AxiosResponse = await getCall("/flights/".concat(req.params.id));
+        var result : APIResponseInterface = await getCall("/flights/".concat(req.params.id));
 
         var obj : FlightInterface = result.data;
         var flight : Flight = new Flight(obj.id);
