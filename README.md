@@ -17,6 +17,7 @@ A postman collection can be found in root directory for testing.
 - Make-runnable 1.3.10
 - Nodemon 2.0.20
 - pg 8.8.0
+- Redis 4.3.1
 - Ts-node 10.9.1
 - Typescript 4.8.3
 
