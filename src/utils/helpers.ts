@@ -76,6 +76,48 @@ export function extractLinks(link: string): Dict {
 
         links[key] = keyLink;
     }
+    // Convert links to app links.
+    for (key in links) {
+        var path : string = links[key].split("public-flights")[1];
+        var appBaseUrl : string = (process.env.APP_URL as string).concat(":").concat(process.env.PORT as string);
+        var route : string = path.split("?")[0];
+        var queries : string[] = path.split("?")[1].split("&");
+        var newQueries : string = "?";
+        for (var q of queries) {
+            if(q.includes("sort")) {
+                var sortValues : string = "";
+                var orderValue : string = "";
+                var sortParams : string[] = q.split("=")[1].split(",");
+                for(var s of sortParams) {
+                    if(s.includes("-")) {
+                        sortValues = sortValues.concat(s.slice(1));
+                        orderValue = orderValue.concat("0");
+                    }
+                    else {
+                        if(s.includes("+")) {
+                            sortValues = sortValues.concat(s.slice(1));
+                        }
+                        // Since + is the default for sorting, It may not be appear on the link.
+                        else {
+                            sortValues = sortValues.concat(s);
+                        }
+                        orderValue = orderValue.concat("1");
+                    }
+                }
+                if(newQueries.length > 1) {
+                    newQueries = newQueries.concat("&");
+                }
+                newQueries = newQueries.concat(`sort=${sortValues.trim()}&order=${orderValue.trim()}`);
+            }
+            else {
+                if(newQueries.length > 1) {
+                    newQueries = newQueries.concat("&");
+                }
+                newQueries = newQueries.concat(q)
+            }
+        }
+        links[key] = appBaseUrl.concat(route).concat(newQueries);
+    }
 
     return links;
 }
