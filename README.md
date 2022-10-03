@@ -3,6 +3,8 @@
 
 A flight app powered by the Schiphol Public Flight API. This app allows you to filter all upcoming and historical flights. App has a local simple reservation service. 
 
+All the Schiphol Public Flight API calls and user info fetched from Postgres DB are cached by Redis. However, reservation data is not cached for the sake of accuracy on revervations. Thus, incorrect reservations can be prevented compere to caching.
+
 A postman collection can be found in root directory for testing.
 
 ## Requirements
