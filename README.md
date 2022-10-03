@@ -139,10 +139,10 @@ example: `/flights?sort=estimatedLandingTime,flightname&order=10&scheduleTime=22
    { 
       "meta": {
          "count": 20,
-         first: 'https://api.schiphol.nl:443/public-flights/flights',
-         prev: 'https://api.schiphol.nl:443/public-flights/flights?page=1',
-         next: 'https://api.schiphol.nl:443/public-flights/flights?page=3',
-         last: 'https://api.schiphol.nl:443/public-flights/flights?page=220'
+         first: 'https://localhost:55644/flights',
+         prev: 'https://localhost:55644/flights?page=1',
+         next: 'https://localhost:55644/flights?page=3',
+         last: 'https://localhost:55644/flights?page=220'
       },
       "data": {
          {
