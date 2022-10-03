@@ -25,6 +25,7 @@ export async function authentication(req: Request, res: Response, next: NextFunc
             req.user = new User(auth_user.username, auth_user.password, auth_user.id, auth_user.created_at, auth_user.updated_at);
             // Cache user info
             redisClient.set(token_string, JSON.stringify(auth_user));
+            redisClient.expireAt(token_string, ((Date.now())/1000) + 10800); // Token cache valid for 3 hours only for security purposes.
         }
         else {
             return res.status(401);
