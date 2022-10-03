@@ -9,7 +9,7 @@ export interface APIResponseInterface {
 }
 
 /** Create Redis Client */
-const redisClient = createClient({
+export const redisClient = createClient({
     socket : {
         host: process.env.REDIS_HOST,
         port: parseInt(process.env.REDIS_PORT as string)
@@ -65,4 +65,4 @@ export async function getCall(path: string) : Promise<APIResponseInterface> {
 
 }
 
-export default {getCall};
+export default {getCall, redisClient};
