@@ -476,7 +476,7 @@
 					"response": []
 				},
 				{
-					"name": "delayed flights",
+					"name": "delayed flights [Refer Description]",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -501,7 +501,7 @@
 								}
 							]
 						},
-						"description": "delayed flights between İstanbul and Ankara."
+						"description": "delayed flights between İstanbul and Ankara. Note: This service of Schipol Flight API (delayed flights) become unavailable at 2nd and 3th October. Which may be continue or can be fixed later."
 					},
 					"response": []
 				},
@@ -901,8 +901,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
+									"key": "password",
+									"value": "{{Access Token}}",
+									"type": "string"
+								},
+								{
 									"key": "token",
-									"value": "c1b5b99c75ad663d8f833aeeb5998cfe5fe4f31f15b7adb343a4bf439b9b72fedf97b69e15068c86147f10b9021d6d6ea73c4eb4509196530744cca2799f7982",
+									"value": "7ca20b876c2ab8f6d7433b4cbcde5f06e5e6eb7ed1111b52c83696fe1a13da21f781ad497709086e600010ea9a4517b017b243aebd4b672818e1dea6d986340e",
 									"type": "string"
 								}
 							]
