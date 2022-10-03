@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { doesExists, pool } from '../services/db';
 import { User } from '../models/User';
 import { checkPass } from '../utils/helpers';
+import { redisClient } from '../utils/connection';
 
 
 const register = async (req: Request, res: Response, next: NextFunction) : Promise<Response<any, Record<string, any>>> => {
@@ -54,9 +55,9 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<R
     console.log(req.body);
     if("username" in req.body &&
      "password" in req.body) {
-        var query = "SELECT * FROM users WHERE username = $1";
         // asign it to a user model
         var user : User;
+        var query = "SELECT * FROM users WHERE username = $1";
         // Fetch the user
         await pool.query(query, [req.body.username]).then(async (res) => {
             if(res.rowCount == 1) {
@@ -69,6 +70,9 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<R
                     var token : string = (await user.generateAccessToken()).getAccessToken() as string;
                     res_code = 200;
                     res_message = token;    
+                    //  Cache token and user info 
+                    redisClient.set(token, JSON.stringify(user));
+                    redisClient.expireAt(token,  ((Date.now())/1000) + 10800); // Token cache valid for 3 hours only for security purposes.
                 }
                 else {
                     res_code = 400;
@@ -81,7 +85,7 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<R
             }
         }).catch((err) => {
             console.log(err);
-        });
+        }); 
     }
     else {
         res_code = 400;
